@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Inventory Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <style>
+        /* Base styles for light mode */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Consistent bg-gray-100 */
+            color: #1f2937; /* Default text color */
+        }
+        .no-underline {
+            text-decoration: none;
+        }
+        .hover\:text-blue-300:hover {
+            color: #93c5fd;
+        }
+        .bg-blue-500 {
+            background-color: #3b82f6;
+        }
+        .text-white {
+            color: #ffffff;
+        }
+        .py-4 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .flex {
+            display: flex;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .sticky {
+            position: sticky;
+        }
+        .top-0 {
+            top: 0;
+        }
+        .z-10 {
+            z-index: 10;
+        }
+        .rounded-md {
+            border-radius: 0.375rem;
+        }
+        .logo {
+            font-size: 1.875rem;
+            font-weight: 600;
+            /* margin-left: 1rem; Removed to allow centering */
+            flex-grow: 1; /* Allows it to take available space for centering */
+            text-align: center; /* Center the text */
+        }
+        .mr-4 {
+            margin-right: 1rem;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            margin-right: 1rem; /* Default Tailwind space-x-4 is 1rem */
+        }
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            color: #93c5fd;
+        }
+        .bg-white {
+            background-color: #ffffff;
+        }
+        .py-20 {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        .px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-3xl {
+            font-size: 1.875rem; /* Tailwind text-3xl */
+            line-height: 2.25rem;
+        }
+        .font-semibold {
+            font-weight: 600;
+        }
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+        .text-blue-700 {
+            color: #1d4ed8;
+        }
+        .text-gray-700 {
+            color: #374151; /* Tailwind text-gray-700 */
+        }
+        .text-lg {
+            font-size: 1.125rem; /* Tailwind text-lg */
+            line-height: 1.75rem;
+        }
+        .bg-green-500 {
+            background-color: #22c55e; /* Tailwind bg-green-500 */
+        }
+        .py-3 {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        .rounded-full {
+            border-radius: 9999px;
+        }
+        .hover\:bg-green-700:hover {
+            background-color: #15803d; /* Tailwind bg-green-700 */
+        }
+        .focus\:outline-none:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+        }
+        .focus\:ring-2:focus {
+            box-shadow: 0 0 0 2px var(--tw-ring-offset-color, transparent), 0 0 0 calc(2px + var(--tw-ring-offset-width, 0px)) var(--tw-ring-color, rgba(59,130,246,.5)); /* Basic ring focus */
+        }
+        .focus\:ring-green-400:focus {
+            --tw-ring-color: #4ade80; /* Tailwind ring-green-400 */
+        }
+        .focus\:ring-opacity-75:focus { /* This class might need to be combined with ring color if not default */
+            --tw-ring-opacity: 0.75;
+        }
+        .grid {
+            display: grid;
+        }
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .md\:grid-cols-2 {
+            @media (min-width: 768px) {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        .lg\:grid-cols-4 {
+            @media (min-width: 1024px) {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+        .gap-8 {
+            gap: 2rem;
+        }
+        .max-w-6xl {
+            max-width: 72rem;
+        }
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        /* shadow-md already defined */
+        .p-6 {
+            padding: 1.5rem;
+        }
+        /* flex, flex-col, justify-between already defined or similar */
+        .text-xl {
+            font-size: 1.25rem; /* Tailwind text-xl */
+            line-height: 1.75rem;
+        }
+        /* mb-4 already defined */
+        .text-gray-800 {
+            color: #1f2937; /* Tailwind text-gray-800 */
+        }
+        .w-full {
+            width: 100%;
+        }
+        /* rounded-lg already defined */
+        .bg-gray-200 {
+            background-color: #e5e7eb; /* Tailwind bg-gray-200 */
+        }
+        /* text-gray-700 already defined */
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .text-2xl {
+            font-size: 1.5rem; /* Tailwind text-2xl */
+            line-height: 2rem;
+        }
+        .mt-8 {
+            margin-top: 2rem;
+        }
+        .max-w-3xl {
+            max-width: 48rem;
+        }
+        .form-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .form-container h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937; /* text-gray-800 */
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4b5563; /* text-gray-600 */
+            font-weight: 500;
+            font-size: 0.875rem; /* text-sm */
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.375rem; /* rounded-md */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            font-size: 1rem; /* text-base */
+            color: #374151; /* text-gray-700 */
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6; /* focus:border-blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); /* Custom focus ring */
+        }
+        .submit-button {
+            background-color: #22c55e; /* bg-green-500 */
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            border: none;
+        }
+        .submit-button:hover {
+            background-color: #16a34a; /* hover:bg-green-600 (darker shade of green-500) */
+        }
+        .submit-button.editing { /* Style for when in edit mode */
+            background-color: #f59e0b; /* bg-yellow-500 */
+        }
+        .submit-button.editing:hover {
+             background-color: #d97706; /* hover:bg-yellow-600 */
+        }
+        .submit-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25); /* Custom focus ring for green */
+        }
+         .submit-button.editing:focus {
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25); /* Custom focus ring for yellow */
+        }
+
+
+        #inventory-list {
+            margin-top: 2rem;
+        }
+
+        #inventory-list h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00008B; /* Darker blue for better visibility */
+            text-align: center;
+        }
+
+        #inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden; /* Important for rounded corners on table */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        #inventory-table thead tr {
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #4b5563; /* text-gray-600 */
+            text-align: left;
+        }
+
+        #inventory-table thead th {
+            padding: 0.75rem 1rem; /* py-3 px-4 */
+            font-weight: 600; /* font-semibold */
+            font-size: 0.875rem; /* text-sm */
+            text-transform: uppercase; /* Optional: for header emphasis */
+            letter-spacing: 0.05em; /* Optional */
+        }
+
+        #inventory-table tbody tr:nth-child(odd) {
+            background-color: #ffffff; /* bg-white */
+        }
+
+        #inventory-table tbody tr:nth-child(even) {
+            background-color: #f9fafb; /* bg-gray-50 */
+        }
+
+        #inventory-table tbody td {
+            padding: 0.75rem 1rem; /* py-3 px-4 */
+            color: #374151; /* text-gray-700 */
+            font-size: 1rem; /* text-base */
+            border-bottom: 1px solid #e5e7eb; /* border-gray-200, for subtle row separation */
+        }
+         #inventory-table tbody tr:last-child td {
+            border-bottom: none; /* Remove border for the last row */
+        }
+
+
+        #inventory-table tbody tr:hover {
+            background-color: #e5e7eb; /* hover:bg-gray-200 */
+            transition: background-color 0.2s ease;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem; /* space-x-2 */
+            justify-content: center; /* Or flex-start if preferred */
+        }
+
+        .edit-button {
+            background-color: #3b82f6; /* bg-blue-500 */
+            color: #fff;
+            padding: 0.5rem 1rem; /* py-2 px-4 */
+            border-radius: 0.375rem; /* rounded-md */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.875rem; /* text-sm */
+            border: none;
+            font-weight: 500; /* medium */
+        }
+
+        .edit-button:hover {
+            background-color: #2563eb; /* hover:bg-blue-600 */
+        }
+
+        .delete-button {
+            background-color: #ef4444; /* bg-red-500 */
+            color: #fff;
+            padding: 0.5rem 1rem; /* py-2 px-4 */
+            border-radius: 0.375rem; /* rounded-md */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.875rem; /* text-sm */
+            border: none;
+            font-weight: 500; /* medium */
+        }
+
+        .delete-button:hover {
+            background-color: #dc2626; /* hover:bg-red-600 */
+        }
+
+        .search-container {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .search-input {
+            padding: 0.75rem;
+            border-radius: 0.375rem; /* rounded-md */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            font-size: 1rem; /* text-base */
+            width: 80%;
+            max-width: 400px; /* Or as desired */
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6; /* focus:border-blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); /* Custom focus ring */
+        }
+
+        .status-good {
+            color: #16a34a; /* Tailwind green-700 or similar */
+        }
+        .status-low-stock {
+            color: #f97316; /* Tailwind orange-500 */
+            font-weight: bold;
+        }
+        .status-expired {
+            color: #ef4444; /* Tailwind red-500 */
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+        .status-expiring-soon {
+            color: #eab308; /* Tailwind yellow-500 */
+            font-weight: bold;
+        }
+         /* For combined status where low stock is also present */
+        .status-expiring-soon.also-low-stock,
+        .status-expired.also-low-stock {
+            /* You can add specific combined styles or rely on individual class effects */
+        }
+
+
+        #stock-alerts-section {
+            /* margin-top: 2rem; */ /* Handled by py-20 on section */
+            /* padding: 1.5rem; */ /* Handled by p-6 on inner div */
+            /* background-color: #fff; */ /* Handled by bg-white on inner div */
+            /* border-radius: 0.5rem; */ /* Handled by rounded-lg on inner div */
+            /* box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); */ /* Handled by shadow-md on inner div */
+        }
+        #stock-alerts-section h2 { /* Targets h2 within the inner div of this section */
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937;
+            text-align: center;
+        }
+        #stock-alerts-list {
+            list-style: none;
+            padding: 0;
+        }
+        #stock-alerts-list li {
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            border-radius: 0.25rem; /* slightly rounded list items */
+            margin-bottom: 0.5rem; /* space between list items */
+        }
+        #stock-alerts-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .alert-item-name { /* To bold the item name within an alert message */
+            font-weight: 600;
+        }
+        /* Applying status colors to alert list items */
+        #stock-alerts-list li.status-expired { background-color: #fee2e2; /* red-100 */ border-left: 4px solid #ef4444; /* red-500 */ }
+        #stock-alerts-list li.status-expiring-soon { background-color: #fef9c3; /* yellow-100 */ border-left: 4px solid #eab308; /* yellow-500 */ }
+        #stock-alerts-list li.status-low-stock { background-color: #ffedd5; /* orange-100 */ border-left: 4px solid #f97316; /* orange-500 */ }
+
+        /* Styles for Reporting Section */
+        #reporting-section {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            background-color: #f3f4f6;
+            border-radius: 0.375rem;
+        }
+
+        #reporting-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937;
+            text-align: center;
+        }
+
+        #reporting-section .report-container {
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        #usage-report-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #usage-report-list li {
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #usage-report-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .usage-item-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .usage-item-quantity {
+            color: #4b5563;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a202c; /* Darker background */
+            color: #e2e8f0; /* Lighter text */
+        }
+        .dark-mode .bg-white {
+            background-color: #2d3748; /* Darker card background */
+        }
+        .dark-mode .text-gray-700 {
+            color: #cbd5e0; /* Lighter gray text */
+        }
+        .dark-mode .text-gray-800 {
+            color: #e2e8f0; /* Lighter gray text */
+        }
+        .dark-mode .form-container {
+            background-color: #2d3748;
+        }
+        .dark-mode .form-container h2,
+        .dark-mode #stock-alerts-section h2,
+        .dark-mode #reporting-section h2,
+        .dark-mode #about-us h2 {
+            color: #90cdf4; /* blue-300 in dark mode, similar to text-blue-700 in light mode */
+        }
+        .dark-mode #inventory-list h2 {
+            color: #ADD8E6; /* Light blue for dark mode */
+        }
+        .dark-mode .form-group label {
+            color: #a0aec0;
+        }
+        .dark-mode .form-group input,
+        .dark-mode .search-input,
+        .dark-mode #report-days {
+            background-color: #4a5568;
+            border-color: #6a7386;
+            color: #e2e8f0;
+        }
+        .dark-mode #inventory-table thead tr {
+            background-color: #4a5568;
+            color: #e2e8f0;
+        }
+        .dark-mode #inventory-table tbody tr:nth-child(odd) {
+            background-color: #2d3748;
+        }
+        .dark-mode #inventory-table tbody tr:nth-child(even) {
+            background-color: #4a5568;
+        }
+        .dark-mode #inventory-table tbody td {
+            color: #e2e8f0;
+            border-bottom-color: #6a7386;
+        }
+        .dark-mode #inventory-table tbody tr:hover {
+            background-color: #6a7386;
+        }
+        .dark-mode #stock-alerts-list li {
+            border-bottom-color: #6a7386;
+        }
+        .dark-mode #stock-alerts-list li.status-expired { background-color: #4a1d1d; border-left-color: #ef4444; }
+        .dark-mode #stock-alerts-list li.status-expiring-soon { background-color: #4a4a1d; border-left-color: #eab308; }
+        .dark-mode #stock-alerts-list li.status-low-stock { background-color: #4a3d1d; border-left-color: #f97316; }
+        .dark-mode #reporting-section .report-container {
+            background-color: #2d3748;
+        }
+        .dark-mode #usage-report-list li {
+            border-bottom-color: #6a7386;
+        }
+        .dark-mode .usage-item-name {
+            color: #e2e8f0;
+        }
+        .dark-mode .usage-item-quantity {
+            color: #a0aec0;
+        }
+        .dark-mode footer {
+            background-color: #2d3748;
+        }
+        .dark-mode header {
+            background-color: #2d3748;
+        }
+        .dark-mode .menu-button {
+            color: #e2e8f0;
+        }
+        .dark-mode .dropdown-menu {
+            background-color: #2d3748;
+            border-color: #4a5568;
+        }
+        .dark-mode .dropdown-menu a {
+            color: #e2e8f0;
+        }
+        .dark-mode .dropdown-menu a:hover {
+            background-color: #4a5568;
+        }
+        .dark-mode .settings-dropdown-menu {
+            background-color: #2d3748;
+            border-color: #4a5568;
+        }
+        .dark-mode .settings-dropdown-menu a {
+            color: #e2e8f0;
+        }
+        .dark-mode .settings-dropdown-menu a:hover {
+            background-color: #4a5568;
+        }
+        .dark-mode .toggle-switch {
+            background-color: #4a5568;
+        }
+        .dark-mode .toggle-switch.active {
+            background-color: #48bb78; /* green-500 */
+        }
+        .dark-mode .toggle-switch .toggle-ball {
+            background-color: #e2e8f0;
+        }
+
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.375rem;
+            left: 0; /* Align to the left of the button */
+            top: 100%; /* Position below the button */
+            margin-top: 0.5rem; /* Space between button and dropdown */
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            border-radius: 0.375rem;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            margin-left: 1rem; /* Space from the left edge */
+        }
+
+        /* Settings Dropdown */
+        .settings-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .settings-dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.375rem;
+            right: 0; /* Align to the right of the button */
+            top: 100%; /* Position below the button */
+            margin-top: 0.5rem; /* Space between button and dropdown */
+        }
+
+        .settings-dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            border-radius: 0.375rem;
+        }
+
+        .settings-dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .settings-dropdown:hover .settings-dropdown-menu {
+            display: block;
+        }
+
+        /* Dark Mode Toggle Switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Ensures text and toggle are spaced */
+            padding: 12px 16px;
+            cursor: pointer;
+        }
+
+        .toggle-container span { /* Explicitly target the text for visibility */
+            color: #1f2937; /* Dark gray for light mode */
+        }
+
+        body.dark-mode .toggle-container span { /* Explicitly target the text for visibility in dark mode */
+            color: #e2e8f0; /* Light gray for dark mode */
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            position: relative;
+            transition: background-color 0.3s;
+            flex-shrink: 0; /* Prevent toggle from shrinking */
+        }
+
+        .toggle-switch.active {
+            background-color: #4CAF50; /* Green for ON */
+        }
+
+        .toggle-ball {
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-ball {
+            transform: translateX(20px);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-500 text-white py-4 flex items-center shadow-md sticky top-0 z-10 rounded-md">
+        <div class="dropdown">
+            <button class="menu-button" onclick="toggleMenu()">
+                &#9776; </button>
+            <div class="dropdown-menu" id="main-menu">
+                <a href="#home" class="hover:text-blue-300 no-underline">Home</a>
+                <a href="#features" class="hover:text-blue-300 no-underline">Features</a>
+                <a href="#inventory-form" class="hover:text-blue-300 no-underline">Inventory</a>
+                <a href="#stock-alerts-section" class="hover:text-blue-300 no-underline">Stock Alerts</a>
+                <a href="#reporting-section" class="hover:text-blue-300 no-underline">Reports</a>
+                <a href="index.html" class="hover:text-blue-300 no-underline">Logout</a>
+            </div>
+        </div>
+
+        <div class="logo">Restaurant Inventory</div>
+
+        <nav class="mr-4 flex items-center">
+            <ul class="flex">
+                <li><a href="#about-us" class="hover:text-blue-300 no-underline">About Us</a></li>
+                <li class="settings-dropdown">
+                    <a href="#" class="hover:text-blue-300 no-underline" onclick="toggleSettingsMenu(event)">Settings</a>
+                    <div class="settings-dropdown-menu" id="settings-menu">
+                        <div class="toggle-container" onclick="toggleDarkMode()">
+                            <span>Dark Mode</span>
+                            <div id="darkModeToggle" class="toggle-switch">
+                                <div class="toggle-ball"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="bg-white py-20 px-6 text-center rounded-md">
+        <h2 class="text-3xl font-semibold mb-4 text-blue-700">Welcome to Restaurant Inventory Management</h2>
+        <p class="text-gray-700 mb-8 text-lg">
+            Use our easy-to-use website to make restaurant inventory tasks faster and automatic.
+        </p>
+        <button onclick="document.getElementById('inventory-form').scrollIntoView({behavior: 'smooth'});" class="bg-green-500 text-white py-3 px-6 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+            Manage Inventory
+        </button>
+    </section>
+
+    <section id="features" class="bg-gray-100 py-20 px-6 text-center rounded-md">
+        <h2 class="text-3xl font-semibold mb-8 text-blue-700">Key Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Inventory Tracking</h3>
+                <p class="text-gray-700 mb-4">Easily add, update, search, and remove inventory items with minimum quantity tracking.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Stock & Expiry Alerts</h3>
+                <p class="text-gray-700 mb-4">Receive automated alerts for low stock, items nearing expiration, and expired items, both in the table and a dedicated section.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Usage Reports</h3>
+                <p class="text-gray-700 mb-4">Monitor stock usage over time to identify trends and optimize ordering.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Browser Local Storage</h3>
+                <p class="text-gray-700 mb-4">The inventory data is saved locally in browser via LocalStorage.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="inventory-form" class="bg-gray-100 py-20 px-6 rounded-md">
+        <div class="form-container max-w-3xl mx-auto">
+            <h2>Add / Update Inventory Item</h2>
+            <form id="add-inventory-form">
+                <input type="hidden" id="edit-index" value="">
+                <div class="form-group">
+                    <label for="item-name">Item Name:</label>
+                    <input type="text" id="item-name" name="item-name" required>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="unit">Unit (e.g., kg, pcs, liter):</label>
+                        <input type="text" id="unit" name="unit" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="minimum-quantity">Minimum Quantity Alert Level:</label>
+                        <input type="number" id="minimum-quantity" name="minimum-quantity" min="0" value="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiration-date">Expiration Date:</label>
+                        <input type="date" id="expiration-date" name="expiration-date" required>
+                    </div>
+                </div>
+                <button type="submit" class="submit-button" id="submit-form-button">Add Item</button>
+            </form>
+        </div>
+
+        <div id="inventory-list" class="max-w-6xl mx-auto mt-12">
+            <h2>Inventory List</h2>
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search items by name...">
+            </div>
+            <table id="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Min. Qty</th>
+                        <th>Expiration Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="stock-alerts-section" class="py-20 px-6 rounded-md bg-gray-100">
+        <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2>Stock Alerts Overview</h2>
+            <ul id="stock-alerts-list">
+                <p id="no-alerts" class="text-gray-500 text-center py-4">No active alerts at the moment. Well done!</p>
+            </ul>
+        </div>
+    </section>
+
+    <section id="reporting-section" class="py-20 px-6 rounded-md bg-gray-100">
+        <div class="report-container">
+            <h2>Stock Usage Report</h2>
+            <div class="mb-4 text-center">
+                <label for="report-days" class="block text-gray-700 text-sm font-semibold mb-2">Show usage for the last:</label>
+                <select id="report-days" class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+                    <option value="7">7 Days</option>
+                    <option value="30">30 Days</option>
+                    <option value="90">90 Days</option>
+                    <option value="365">365 Days</option>
+                </select>
+            </div>
+            <ul id="usage-report-list">
+                <p id="no-usage-data" class="text-gray-500 text-center py-4">No usage data recorded yet.</p>
+            </ul>
+        </div>
+    </section>
+
+
+    <section id="about-us" class="bg-white py-20 px-6 text-center rounded-md">
+        <h2 class="text-3xl font-semibold mb-8 text-blue-700">About Us</h2>
+        <p class="text-gray-700 text-lg max-w-3xl mx-auto">
+            We are college students who created this website as a project for our Application Development and Emerging Technologies course, aiming to help restaurants manage inventory efficiently through a simple and practical system.
+        </p>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-4 text-center rounded-md">
+        <p>&copy; <span id="current-year"></span> Restaurant Inventory Management System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Close menus after clicking a link
+                document.getElementById('main-menu').style.display = 'none';
+                document.getElementById('settings-menu').style.display = 'none';
+            });
+        });
+
+        // Toggle main menu dropdown
+        function toggleMenu() {
+            const menu = document.getElementById('main-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            // Ensure settings menu is closed when main menu is opened
+            document.getElementById('settings-menu').style.display = 'none';
+        }
+
+        // Toggle settings menu dropdown
+        function toggleSettingsMenu(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const settingsMenu = document.getElementById('settings-menu');
+            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+            // Ensure main menu is closed when settings menu is opened
+            document.getElementById('main-menu').style.display = 'none';
+        }
+
+        // Close dropdowns if clicked outside
+        window.addEventListener('click', function(event) {
+            if (!event.target.closest('.dropdown') && !event.target.closest('.settings-dropdown')) {
+                document.getElementById('main-menu').style.display = 'none';
+                document.getElementById('settings-menu').style.display = 'none';
+            }
+        });
+
+
+        // Dark Mode Functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        // Function to set dark mode based on localStorage or OS preference
+        function applyDarkModePreference() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.classList.add('active');
+            } else {
+                document.body.classList.remove('dark-mode');
+                darkModeToggle.classList.remove('active');
+            }
+        }
+
+        // Toggle dark mode and save preference
+        function toggleDarkMode() {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            darkModeToggle.classList.toggle('active', isDarkMode);
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        // Apply dark mode on initial load
+        applyDarkModePreference();
+
+
+        const inventoryForm = document.getElementById('add-inventory-form');
+        const inventoryTableBody = document.getElementById('inventory-table').getElementsByTagName('tbody')[0];
+        const searchInput = document.getElementById('search-input');
+        const editIndexInput = document.getElementById('edit-index');
+        const submitFormButton = document.getElementById('submit-form-button');
+        const stockAlertsList = document.getElementById('stock-alerts-list');
+        const noAlertsMessage = document.getElementById('no-alerts');
+        const usageReportList = document.getElementById('usage-report-list');
+        const noUsageDataMessage = document.getElementById('no-usage-data');
+        const reportDaysSelect = document.getElementById('report-days');
+
+
+        let inventoryItems = JSON.parse(localStorage.getItem('inventory')) || [];
+        let inventoryHistory = JSON.parse(localStorage.getItem('inventoryHistory')) || []; // To track changes for reports
+
+        const EXPIRY_SOON_DAYS = 7; // Notify 7 days before expiration
+        const DEFAULT_MIN_QUANTITY = 5;
+
+        inventoryForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const itemName = document.getElementById('item-name').value.trim();
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const unit = document.getElementById('unit').value.trim();
+            const minimumQuantity = parseInt(document.getElementById('minimum-quantity').value);
+            const expirationDateInput = document.getElementById('expiration-date').value;
+            const editingIndex = editIndexInput.value;
+
+
+            if (itemName === '' || isNaN(quantity) || quantity < 0 || unit === '' || isNaN(minimumQuantity) || minimumQuantity < 0 || !expirationDateInput) {
+                // Replaced alert with a custom message box or modal in a real app
+                console.error('Please enter valid information for all fields. Quantity and Minimum Quantity cannot be negative.');
+                return;
+            }
+
+            const expirationDate = new Date(expirationDateInput);
+            expirationDate.setHours(0,0,0,0);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // Allow editing of past dates, but not setting new items to past dates unless it was already past
+            if (expirationDate < today) {
+                let allowPastDate = false;
+                if (editingIndex !== '') {
+                    const currentItem = inventoryItems[parseInt(editingIndex)];
+                    // Allow if the date wasn't changed OR if the original date was already in the past
+                    if (currentItem.expirationDate === expirationDateInput || new Date(currentItem.expirationDate) < today) {
+                        allowPastDate = true;
+                    }
+                }
+                if (!allowPastDate) {
+                    // Replaced alert with a custom message box or modal in a real app
+                    console.error('Expiration date cannot be set to a past date for new items or when changing from a future/current date.');
+                    return;
+                }
+            }
+
+
+            const newItemData = {
+                name: itemName,
+                quantity: quantity,
+                unit: unit,
+                minimumQuantity: minimumQuantity,
+                expirationDate: expirationDateInput,
+            };
+
+            if (editingIndex !== '') {
+                const oldQuantity = inventoryItems[parseInt(editingIndex)].quantity;
+                const quantityChange = oldQuantity - quantity; // Positive if quantity decreased (used), negative if increased
+
+                if (quantityChange > 0) {
+                    recordUsage(itemName, quantityChange, unit);
+                }
+                inventoryItems[parseInt(editingIndex)] = newItemData;
+                editIndexInput.value = '';
+                submitFormButton.textContent = 'Add Item';
+                submitFormButton.classList.remove('editing');
+            } else {
+                inventoryItems.push(newItemData);
+            }
+
+            localStorage.setItem('inventory', JSON.stringify(inventoryItems));
+            displayInventory();
+            inventoryForm.reset();
+            document.getElementById('minimum-quantity').value = DEFAULT_MIN_QUANTITY;
+        });
+
+        function getItemStatus(item) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const expirationDate = new Date(item.expirationDate);
+            expirationDate.setHours(0,0,0,0);
+
+            const timeDiff = expirationDate.getTime() - today.getTime();
+            const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            let statusText = '';
+            let statusClasses = []; // Use array for multiple classes
+
+            const isLowStock = item.quantity < item.minimumQuantity;
+            const isExpired = expirationDate < today;
+            const isExpiringSoon = dayDiff >=0 && dayDiff <= EXPIRY_SOON_DAYS; // Ensure not already expired
+
+            if (isExpired) {
+                statusText = 'Expired';
+                statusClasses.push('status-expired');
+                if (isLowStock) {
+                     statusText += ', Low Stock';
+                     statusClasses.push('also-low-stock'); // For combined styling if needed
+                }
+            } else if (isExpiringSoon) {
+                statusText = `Expires in ${dayDiff} day(s)`;
+                statusClasses.push('status-expiring-soon');
+                if (isLowStock) {
+                    statusText += ', Low Stock';
+                    statusClasses.push('also-low-stock');
+                }
+            } else if (isLowStock) {
+                statusText = 'Low Stock';
+                statusClasses.push('status-low-stock');
+            } else {
+                statusText = 'Good';
+                statusClasses.push('status-good');
+            }
+
+            return { text: statusText, class: statusClasses.join(' ') };
+        }
+
+
+        function displayInventory() {
+            inventoryTableBody.innerHTML = '';
+            const searchTerm = searchInput.value.toLowerCase();
+
+            const filteredItems = inventoryItems.filter(item =>
+                item.name.toLowerCase().includes(searchTerm)
+            );
+
+            if (inventoryItems.length === 0) {
+                const row = inventoryTableBody.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = 7;
+                cell.textContent = 'No inventory items yet. Click "Add / Update Inventory Item" to add some!';
+                cell.style.textAlign = 'center';
+                cell.style.padding = '1rem';
+            } else if (filteredItems.length === 0 && searchTerm !== '') {
+                 const row = inventoryTableBody.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = 7;
+                cell.textContent = 'No items match your search criteria.';
+                cell.style.textAlign = 'center';
+                cell.style.padding = '1rem';
+            } else {
+                filteredItems.forEach((item) => { // We need the original index for edit/delete
+                    const originalIndex = inventoryItems.findIndex(invItem => invItem === item);
+
+                    const row = inventoryTableBody.insertRow();
+                    row.insertCell().textContent = item.name;
+                    row.insertCell().textContent = item.quantity;
+                    row.insertCell().textContent = item.unit;
+                    row.insertCell().textContent = item.minimumQuantity;
+                    row.insertCell().textContent = item.expirationDate;
+
+                    const statusCell = row.insertCell();
+                    const status = getItemStatus(item);
+                    statusCell.textContent = status.text;
+                    statusCell.className = status.class;
+
+                    const actionsCell = row.insertCell();
+                    actionsCell.className = 'action-buttons';
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.className = 'edit-button';
+                    editButton.addEventListener('click', () => loadItemForEdit(originalIndex));
+                    actionsCell.appendChild(editButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'delete-button';
+                    deleteButton.addEventListener('click', () => deleteItem(originalIndex));
+                    actionsCell.appendChild(deleteButton);
+                });
+            }
+            displayStockAlerts();
+            displayUsageReport();
+        }
+
+        function displayStockAlerts() {
+            stockAlertsList.innerHTML = '';
+            let hasAlerts = false;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            inventoryItems.forEach(item => {
+                const expirationDate = new Date(item.expirationDate);
+                expirationDate.setHours(0,0,0,0);
+                const timeDiff = expirationDate.getTime() - today.getTime();
+                const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                const isLowStock = item.quantity < item.minimumQuantity;
+                const isExpired = expirationDate < today;
+                const isExpiringSoon = dayDiff >= 0 && dayDiff <= EXPIRY_SOON_DAYS;
+
+
+                let alertMessages = [];
+                let alertClasses = []; // To apply appropriate class to the <li>
+
+                if (isExpired) {
+                    alertMessages.push(`<span class="alert-item-name">${item.name}</span> has expired.`);
+                    alertClasses.push('status-expired');
+                    if (isLowStock) alertMessages.push(`It is also low in stock (${item.quantity}/${item.minimumQuantity}).`);
+                } else { // Not expired
+                    if (isExpiringSoon) {
+                        alertMessages.push(`<span class="alert-item-name">${item.name}</span> is expiring in ${dayDiff} day(s).`);
+                        alertClasses.push('status-expiring-soon');
+                    }
+                    if (isLowStock) {
+                        if (alertMessages.length > 0) { // Already has expiring soon message
+                             alertMessages.push(`It is also low in stock (${item.quantity}/${item.minimumQuantity}).`);
+                             if (!alertClasses.includes('status-low-stock')) alertClasses.push('status-low-stock'); // Add if not primary
+                        } else {
+                             alertMessages.push(`<span class="alert-item-name">${item.name}</span> is low in stock (${item.quantity}/${item.minimumQuantity}).`);
+                             alertClasses.push('status-low-stock');
+                        }
+                    }
+                }
+
+
+                if (alertMessages.length > 0) {
+                    hasAlerts = true;
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = alertMessages.join(' ');
+                    // Prioritize class: Expired > Expiring Soon > Low Stock for list item styling
+                    if (alertClasses.includes('status-expired')) listItem.className = 'status-expired';
+                    else if (alertClasses.includes('status-expiring-soon')) listItem.className = 'status-expiring-soon';
+                    else if (alertClasses.includes('status-low-stock')) listItem.className = 'status-low-stock';
+
+                    stockAlertsList.appendChild(listItem);
+                }
+            });
+
+            noAlertsMessage.style.display = hasAlerts ? 'none' : 'block';
+        }
+
+
+        function loadItemForEdit(index) {
+            const item = inventoryItems[index];
+            document.getElementById('item-name').value = item.name;
+            document.getElementById('quantity').value = item.quantity;
+            document.getElementById('unit').value = item.unit;
+            document.getElementById('minimum-quantity').value = item.minimumQuantity;
+            document.getElementById('expiration-date').value = item.expirationDate;
+            editIndexInput.value = index;
+            submitFormButton.textContent = 'Update Item';
+            submitFormButton.classList.add('editing');
+
+            inventoryForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function deleteItem(index) {
+            // Replaced confirm with a custom message box or modal in a real app
+            if (window.confirm(`Are you sure you want to delete "${inventoryItems[index].name}"?`)) {
+                inventoryItems.splice(index, 1);
+                localStorage.setItem('inventory', JSON.stringify(inventoryItems));
+                displayInventory();
+            }
+        }
+
+        function recordUsage(itemName, quantityUsed, unit) {
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0]; //YYYY-MM-DD format
+
+            inventoryHistory.push({
+                date: dateString,
+                itemName: itemName,
+                quantityUsed: quantityUsed,
+                unit: unit
+            });
+            localStorage.setItem('inventoryHistory', JSON.stringify(inventoryHistory));
+        }
+
+        function displayUsageReport() {
+            usageReportList.innerHTML = '';
+            let hasUsageData = false;
+            const days = parseInt(reportDaysSelect.value);
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - days);
+            cutoffDate.setHours(0, 0, 0, 0);
+
+            const aggregatedUsage = {};
+
+            inventoryHistory.forEach(record => {
+                const recordDate = new Date(record.date);
+                recordDate.setHours(0, 0, 0, 0);
+
+                if (recordDate >= cutoffDate) {
+                    hasUsageData = true;
+                    const key = `${record.itemName} (${record.unit})`;
+                    if (!aggregatedUsage[key]) {
+                        aggregatedUsage[key] = 0;
+                    }
+                    aggregatedUsage[key] += record.quantityUsed;
+                }
+            });
+
+            if (hasUsageData) {
+                for (const itemKey in aggregatedUsage) {
+                    const listItem = document.createElement('li');
+                    const [itemName, unit] = itemKey.split(' (');
+                    listItem.innerHTML = `<span class="usage-item-name">${itemName.trim()}</span> <span>${aggregatedUsage[itemKey]} ${unit.slice(0, -1)} used</span>`;
+                    usageReportList.appendChild(listItem);
+                }
+            } else {
+                noUsageDataMessage.style.display = 'block';
+            }
+            noUsageDataMessage.style.display = hasUsageData ? 'none' : 'block';
+        }
+
+        searchInput.addEventListener('input', displayInventory);
+        reportDaysSelect.addEventListener('change', displayUsageReport);
+
+        // Initial display
+        document.getElementById('minimum-quantity').value = DEFAULT_MIN_QUANTITY; // Set default for new entries
+        displayInventory();
+        displayUsageReport(); // Initial display of usage report
+    </script>
+</body>
+</html>
